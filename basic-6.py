@@ -147,3 +147,140 @@ print(type(s))
 # ⚠️ {} creates an empty dictionary, not a set.
 d = {}
 print(type(d)) # <class 'dict'>
+
+# 2. Adding and Removing Elements
+# Adding Elements
+# add()
+s = {1, 2, 3}
+s.add(4)
+print(s) # {1, 2, 3, 4}
+
+# update()
+# Add multiple elements.
+s = {1, 2}
+s.update([3, 4, 5])
+print(s) # {1, 2, 3, 4, 5}
+
+# Removing Elements
+# remove()
+s = {1, 2, 3}
+s.remove(2)
+print(s) # {1, 3}
+# ⚠️ Throws an error if the element is not present.
+# s.remove(10)
+
+# discard()
+s = {1, 2, 3}
+s.discard(10)
+print(s) # {1, 2, 3}: No error occurs.
+
+# pop(): Removes a random element.
+s = {1, 2, 3}
+print(s.pop())
+
+# clear()
+s = {1, 2, 3}
+s.clear()
+print(s) # set()
+
+# 3. Set Operations
+A = {1, 2, 3, 4}
+B = {3, 4, 5, 6}
+# Union (|): Combines all unique elements.
+print(A | B) # {1, 2, 3, 4, 5, 6}
+# OR
+print(A.union(B)) # {1, 2, 3, 4, 5, 6}
+# Intersection (&): Common elements.
+print(A & B) # {3, 4}
+# OR
+print(A.intersection(B)) # {3, 4}
+# Difference (-): Elements in first set but not in second.
+print(A - B) # {1, 2}
+# OR
+print(A.difference(B)) # {1, 2}
+# Symmetric Difference (^): Elements present in exactly one set.
+print(A ^ B) # {1, 2, 5, 6}
+# OR
+print(A.symmetric_difference(B)) # {1, 2, 5, 6}
+
+# 4. Subsets: A set is a subset if all its elements exist in another set.
+A = {1, 2}
+B = {1, 2, 3, 4}
+print(A.issubset(B)) # True
+
+# 5. Supersets: A set is a superset if it contains all elements of another set.
+A = {1, 2, 3, 4}
+B = {1, 2}
+print(A.issuperset(B)) # True
+
+# 6. Disjoint Sets: Disjoint sets have no common elements.
+A = {1, 2}
+B = {3, 4}
+print(A.isdisjoint(B)) # True
+
+# 7. Set Comprehensions: Similar to list comprehensions.
+# Squares
+squares = {x * x for x in range(1, 6)}
+print(squares) # {1, 4, 9, 16, 25}
+# Even Numbers
+evens = {x for x in range(1, 11) if x % 2 == 0}
+print(evens) # {2, 4, 6, 8, 10}
+
+# 8. Frozenset: A frozenset is an immutable version of a set.
+# ✅ Cannot add or remove elements.
+fs = frozenset([1, 2, 3, 4])
+print(fs) # frozenset({1, 2, 3, 4})
+# Valid Operations
+A = frozenset([1, 2, 3])
+B = frozenset([3, 4, 5])
+print(A | B) # frozenset({1, 2, 3, 4, 5})
+print(A & B) # frozenset({3})
+# Invalid Operations
+fs = frozenset([1, 2, 3])
+# fs.add(4) # AttributeError
+# Because frozensets cannot be modified.
+
+# Important Set Methods
+# s.add(x)
+# s.update(iterable)
+# s.remove(x)
+# s.discard(x)
+# s.pop()
+# s.clear()
+#
+# s.union(other)
+# s.intersection(other)
+# s.difference(other)
+# s.symmetric_difference(other)
+#
+# s.issubset(other)
+# s.issuperset(other)
+# s.isdisjoint(other)
+
+# Interview Questions
+# Q1. Why are sets faster for searching than lists?
+# Sets use hashing, so lookup is approximately O(1), while lists require O(n) search.
+
+# Q2. Can a set contain duplicate values?
+# No.
+s = {1, 1, 2, 2, 3}
+print(s) # {1, 2, 3}
+
+# Q3. Can a set contain a list?
+# No, because lists are mutable and unhashable.
+# s = {[1, 2, 3]} # TypeError
+
+# Q4. Can a set contain tuples?
+# Yes, because tuples are immutable and hashable.
+s = {(1, 2), (3, 4)}
+print(s) # {(1, 2), (3, 4)}
+
+# Memory Trick
+# Union (|) → Combine everything
+# Intersection (&) → Common elements
+# Difference (-) → Remove common elements from first set
+# Symmetric Difference (^) → Keep uncommon elements only
+# Subset → Smaller inside bigger
+# Superset → Bigger contains smaller
+# Disjoint → No common elements
+# Frozenset → Read-only set ✅
