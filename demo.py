@@ -1,4 +1,7 @@
-from functools import reduce
-numbers = [1, 2, 3, 4]
-result = reduce(lambda x, y: x + y, numbers)
-print(result)
+# Variance and Standard Deviation
+import statistics
+
+data = [2, 4, 4, 4, 5, 5, 7, 9]
+
+print(statistics.variance(data))
+print(statistics.stdev(data))
