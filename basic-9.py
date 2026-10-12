@@ -147,3 +147,145 @@ print(add(1, 2, 3)) # 6
 
 # Functional Programming in Python
 # Functional Programming (FP) is a programming style where functions are treated as first-class objects and computations are performed using functions rather than changing program state.
+
+# 1. First-class Functions
+# - In Python, functions are treated like any other object.
+
+# ✅ Can be:
+#
+# Assigned to variables
+# Passed as arguments
+# Returned from other functions
+# Stored in collections
+
+def greet():
+    return "Hello"
+say_hello = greet
+print(say_hello())
+
+# 2. Higher-order Functions
+# A function that:
+# - Takes another function as an argument
+# - Returns a function
+def apply(func, value):
+    return func(value)
+def square(x):
+    return x * x
+print(apply(square, 5))
+
+# 3. map() - Applies a function to every item in an iterable.
+# Syntax - map(function, iterable)
+numbers = [1, 2, 3, 4]
+result = list(map(lambda x: x * 2, numbers))
+print(result)
+
+# 4. filter() - Filters elements based on a condition.
+# Syntax - filter(function, iterable)
+numbers = [1, 2, 3, 4, 5, 6]
+even = list(filter(lambda x: x % 2 == 0, numbers))
+print(even)
+
+# 5. reduce() - Reduces an iterable to a single value.
+# Import - from functools import reduce
+from functools import reduce
+numbers = [1, 2, 3, 4]
+result = reduce(lambda x, y: x + y, numbers)
+print(result)
+# Working
+# 1 + 2 = 3
+# 3 + 3 = 6
+# 6 + 4 = 10
+
+# 6. zip() - Combines multiple iterables element-wise.
+names = ["Aman", "Rahul", "Vijay"]
+marks = [90, 85, 92]
+result = list(zip(names, marks))
+print(result)
+
+# 7. enumerate() - Provides index along with values.
+fruits = ["Apple", "Banana", "Mango"]
+for index, value in enumerate(fruits):
+    print(index, value)
+
+# Start from 1
+for index, value in enumerate(fruits, start=1):
+    print(index, value)
+
+# 8. any() - Returns True if at least one element is true.
+numbers = [0, 0, 5, 0]
+print(any(numbers)) # Because 5 is truthy.
+print(any([False, False, False])) # False
+
+# 9. all() - Returns True if all elements are true.
+numbers = [1, 2, 3]
+print(all(numbers)) # True
+print(all([1, 2, 0])) # False: Because 0 is falsy.
+
+# 10. min() - Returns the smallest element.
+numbers = [10, 5, 20, 2]
+print(min(numbers)) # 2
+# With strings
+names = ["Aman", "Rahul", "Vijay"]
+print(min(names)) # Aman - (Alphabetically smallest)
+
+# 11. max() - Returns the largest element.
+numbers = [10, 5, 20, 2]
+print(max(numbers)) # 20
+
+# 12. sum() - Returns the total sum.
+numbers = [1, 2, 3, 4]
+print(sum(numbers)) # 10
+# With start value
+print(sum([1, 2, 3], 100)) # 106
+
+# 13. sorted() - Returns a new sorted list.
+numbers = [5, 1, 8, 3]
+print(sorted(numbers)) # [1, 3, 5, 8]
+# Descending Order
+print(sorted(numbers, reverse=True)) # [8, 5, 3, 1]
+# Sort by Length
+words = ["banana", "kiwi", "apple"]
+print(sorted(words, key=len)) # ['kiwi', 'apple', 'banana']
+
+# Interview Questions
+# Q1. Difference between map() and filter()?
+# map()
+# - Transforms every element.
+# - Output size remains same.
+map(lambda x: x * 2, [1,2,3])
+# filter()
+# - Selects elements based on condition.
+# - Output size may decrease.
+filter(lambda x: x % 2 == 0, [1,2,3])
+
+# Q2. Difference between any() and all()?
+any([0, 0, 1])    # True
+all([0, 0, 1])    # False
+# any() → At least one True
+# all() → All must be True
+
+# Q3. Why use lambda with map() and filter()?
+# Because lambda allows creating small anonymous functions inline.
+list(map(lambda x: x * x, [1,2,3])) # [1, 4, 9]
+
+# Quick Revision
+# map()        # Transform data
+# filter()     # Filter data
+# reduce()     # Reduce to single value
+# zip()        # Combine iterables
+# enumerate()  # Index + value
+# any()        # At least one True
+# all()        # All True
+# min()        # Smallest element
+# max()        # Largest element
+# sum()        # Total
+# sorted()     # Sort iterable
+
+# Real-world flow:
+from functools import reduce
+numbers = [1, 2, 3, 4, 5, 6]
+evens = filter(lambda x: x % 2 == 0, numbers)
+squares = map(lambda x: x * x, evens)
+result = reduce(lambda x, y: x + y, squares)
+print(result) # 56
+# (2² + 4² + 6² = 4 + 16 + 36 = 56)

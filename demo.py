@@ -1,6 +1,4 @@
-# 4. Find the largest of three numbers
-a = int(input("Enter first number: "))
-b = int(input("Enter second number: "))
-c = int(input("Enter third number: "))
-
-print("Largest =", min(a, b, c))
+from functools import reduce
+numbers = [1, 2, 3, 4]
+result = reduce(lambda x, y: x + y, numbers)
+print(result)
