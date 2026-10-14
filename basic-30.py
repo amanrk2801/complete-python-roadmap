@@ -382,3 +382,350 @@ df = pd.DataFrame(data)
 # Machine Learning (ML) is a branch of Artificial Intelligence (AI) that enables computers to learn patterns from data and make predictions or decisions without being explicitly programmed.
 
 # 1. ML Fundamentals
+# What is Machine Learning?
+# Instead of writing rules manually, we provide data and let the model learn the rules.
+
+# Traditional Programming
+# Input + Rules → Output
+
+# Machine Learning
+# Input + Output Data → ML Algorithm → Model
+
+# Types of ML
+# 1. Supervised Learning
+# 2. Unsupervised Learning
+# 3. Reinforcement Learning
+
+# 2. Supervised Learning
+# - In supervised learning, the dataset contains:
+# Features (X) → Inputs
+# Labels (Y) → Outputs
+# - The model learns the relationship between X and Y.
+
+# Examples
+# Input - Output
+# House Size - Price
+# Email Text - Spam/Not Spam
+# Student Marks - Pass/Fail
+
+# Algorithms
+# Linear Regression
+# Logistic Regression
+# Decision Trees
+# Random Forest
+# SVM
+# KNN
+
+# 3. Unsupervised Learning
+# Data contains only inputs (X).
+# No target/output column exists.
+# Goal:
+# - Find patterns
+# - Group similar data
+# - Reduce dimensions
+
+# Examples
+# Customer segmentation
+# Product recommendations
+# Market basket analysis
+
+# Algorithms
+# K-Means
+# Hierarchical Clustering
+# DBSCAN
+# PCA
+
+# 4. Regression
+# - Used when output is a continuous value.
+# Examples
+# Predict:
+# - House prices
+# - Salary
+# - Temperature
+# - Stock values
+
+# Simple Linear Regression
+# Equation: y=mx+b
+# Where:
+# y = prediction
+# x = feature
+# m = slope
+# b = intercept
+
+from sklearn.linear_model import LinearRegression
+import numpy as np
+
+X = np.array([[1], [2], [3], [4]])
+y = np.array([2, 4, 6, 8])
+
+model = LinearRegression()
+model.fit(X, y)
+
+print(model.predict([[5]]))
+
+# Output: [10.]
+
+# 5. Classification
+# - Used when output belongs to categories.
+# Examples
+# - Spam / Not Spam
+# - Pass / Fail
+# - Disease / No Disease
+# - Cat / Dog
+
+# Types
+# Binary Classification
+# 0 or 1
+# Yes or No
+
+# Multi-class Classification
+# Red
+# Green
+# Blue
+
+# from sklearn.linear_model import LogisticRegression
+
+# 6. Clustering
+# - Grouping similar records together.
+
+# Example
+# Customer Data:
+# Customer A → Young, Tech Lover
+# Customer B → Similar Behavior
+# ⇒ Same Cluster
+
+# K-Means Clustering
+# Steps:
+# 1. Choose K clusters
+# 2. Assign points
+# 3. Calculate centroids
+# 4. Repeat until stable
+from sklearn.cluster import KMeans
+
+model = KMeans(n_clusters=3)
+model.fit(data)
+# Applications:
+# Market Segmentation
+# Image Compression
+# Recommendation Systems
+
+# 7. Feature Engineering
+# Feature engineering means creating better input features to improve model performance.
+# Date Feature
+# Original: 2026-10-14
+# New Features:
+# Year = 2026 Month = 10 Day = 14 Weekday = Tuesday
+# Salary Data: Monthly Salary
+# Create: Annual Salary
+
+# Techniques
+# - Feature Creation
+# - Feature Selection
+# - Feature Transformation
+# - Encoding
+# - Scaling
+
+# 8. Train/Test Split
+# Never train and test on the same data.
+# Standard Split
+# 80% Training
+# 20% Testing
+# or
+# 70% Training
+# 30% Testing
+
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=42
+)
+
+# Why?
+# Training Data:
+# - Learn patterns
+
+# Testing Data:
+# - Measure performance on unseen data
+
+# 9. Cross-Validation
+# Instead of using only one train-test split, divide data into multiple folds.
+
+# 5-Fold Cross Validation
+# Fold 1 → Test
+# Fold 2-5 → Train
+#
+# Fold 2 → Test
+# Fold 1,3,4,5 → Train
+#
+# ...
+
+# Benefits:
+# ✅ More reliable
+# ✅ Uses data efficiently
+# ✅ Reduces bias
+
+from sklearn.model_selection import cross_val_score
+
+scores = cross_val_score(
+    model,
+    X,
+    y,
+    cv=5
+)
+
+print(scores)
+
+# 10. Model Evaluation
+# Regression Metrics
+# MAE: Mean Absolute Error
+from sklearn.metrics import mean_absolute_error
+
+# MSE: Mean Squared Error
+from sklearn.metrics import mean_squared_error
+
+# RMSE
+import numpy as np
+
+rmse = np.sqrt(mse)
+
+# R² Score
+from sklearn.metrics import r2_score
+
+# Classification Metrics
+# Accuracy
+from sklearn.metrics import accuracy_score
+# Formula:
+# Correct Predictions / Total Predictions
+
+# Precision
+# TP / (TP + FP)
+
+# Recall
+# TP / (TP + FN)
+
+# F1 Score
+# 2 × Precision × Recall
+# -----------------------
+# Precision + Recall
+
+# Confusion Matrix
+# -          | Pred Yes | Pred No
+# Actual Yes | TP       | FN
+# Actual No  | FP       | TN
+
+from sklearn.metrics import confusion_matrix
+
+# 11. Scikit-Learn
+# - Most popular ML library in Python.
+# Installation: pip install scikit-learn
+from sklearn.linear_model import LinearRegression
+
+model = LinearRegression()
+
+model.fit(X_train, y_train)
+
+predictions = model.predict(X_test)
+
+# Advantages:
+# - Easy API
+# - Many algorithms
+# - Data preprocessing
+# - Evaluation tools
+# - Hyperparameter tuning
+
+# 12. Pipelines
+# Pipeline combines multiple steps into one workflow.
+# Without Pipeline:
+# Scale Data
+# ↓
+# Train Model
+# ↓
+# Predict
+
+# With Pipeline:
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+
+pipe = Pipeline([
+    ("scaler", StandardScaler()),
+    ("model", LogisticRegression())
+])
+
+pipe.fit(X_train, y_train)
+
+# Benefits:
+# ✅ Cleaner code
+# ✅ Prevents data leakage
+# ✅ Easy deployment
+
+# 13. Hyperparameter Tuning
+# - Hyperparameters are settings chosen before training.
+RandomForest(
+    n_estimators=100,
+    max_depth=5
+)
+
+# Grid Search
+# - Tries all combinations.
+from sklearn.model_selection import GridSearchCV
+
+params = {
+    "max_depth": [3, 5, 7],
+    "n_estimators": [50, 100]
+}
+
+grid = GridSearchCV(
+    model,
+    params,
+    cv=5
+)
+
+grid.fit(X_train, y_train)
+
+print(grid.best_params_)
+
+# Random Search
+# - Faster for large datasets.
+from sklearn.model_selection import RandomizedSearchCV
+
+# Complete ML Workflow
+# Collect Data
+#       ↓
+# Clean Data
+#       ↓
+# Feature Engineering
+#       ↓
+# Train/Test Split
+#       ↓
+# Choose Model
+#       ↓
+# Train Model
+#       ↓
+# Cross Validation
+#       ↓
+# Evaluate Model
+#       ↓
+# Hyperparameter Tuning
+#       ↓
+# Deploy Model
+
+# Interview Questions
+# Q1: Difference between Supervised and Unsupervised Learning?
+# - Supervised uses labeled data.
+# - Unsupervised uses unlabeled data.
+
+# Q2: What is Overfitting?
+# Model memorizes training data and performs poorly on new data.
+
+# Q3: Why use Cross Validation?
+# Gives more reliable performance estimates.
+
+# Q4: Difference between Regression and Classification?
+# Regression predicts numerical values.
+# Classification predicts categories/classes.
+
+# Q5: What is Feature Engineering?
+# Creating or transforming features to improve model performance.
