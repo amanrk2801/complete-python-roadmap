@@ -272,3 +272,253 @@ print(add("10", "20")) # 1020
 
 # -------------------------------------------- #
 # 44. Dataclasses (Python)
+# - dataclasses were introduced in Python 3.7 to reduce boilerplate code when creating classes that mainly store data.
+# from dataclasses import dataclass
+
+# 1. @dataclass
+# - Without dataclass:
+class Student:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+s = Student("Aman", 22)
+print(s.name)
+# With dataclass:
+from dataclasses import dataclass
+
+@dataclass
+class Student:
+    name: str
+    age: int
+
+s = Student("Aman", 22)
+
+print(s)
+# Output: Student(name='Aman', age=22)
+
+# Automatically Generates
+# __init__()
+# __repr__()
+# __eq__()
+# Other useful methods
+# Equivalent generated code:
+class Student:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __repr__(self):
+        return f"Student(name='{self.name}', age={self.age})"
+
+# 2. Default Values
+# - You can assign default values to fields.
+from dataclasses import dataclass
+
+@dataclass
+class Employee:
+    name: str
+    salary: int = 30000
+
+e1 = Employee("Aman")
+
+print(e1)
+# Output: Employee(name='Aman', salary=30000)
+
+# Override default value:
+e2 = Employee("Rahul", 50000)
+print(e2)
+
+# Output: Employee(name='Rahul', salary=50000)
+
+# Important Rule
+# - Fields without defaults must come first.
+# ✅ Correct
+@dataclass
+class Test:
+    name: str
+    age: int = 18
+# ❌ Wrong
+@dataclass
+class Test:
+    age: int = 18
+    name: str
+# Error: TypeError: non-default argument follows default argument
+
+# 3. Frozen Dataclasses
+# - Creates immutable objects.
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Point:
+    x: int
+    y: int
+
+p = Point(10, 20)
+
+print(p.x)
+# - Attempting modification:
+# p.x = 100
+# Output: FrozenInstanceError
+
+# Use Case:
+# Configuration settings
+# Constants
+# Read-only data
+
+@dataclass(frozen=True)
+class Config:
+    HOST: str
+    PORT: int
+
+cfg = Config("localhost", 8080)
+
+# 4. field()
+# - field() provides extra options for a dataclass field.
+from dataclasses import dataclass, field
+
+# default_factory: Useful for mutable objects.
+# ✅ Correct
+@dataclass
+class Student:
+    name: str
+    subjects: list = field(default_factory=list)
+
+s1 = Student("Aman")
+s2 = Student("Rahul")
+
+s1.subjects.append("Python")
+
+print(s1.subjects)
+print(s2.subjects)
+# Output:
+# ['Python']
+# []
+
+# repr=False
+# - Hide field from representation.
+@dataclass
+class User:
+    username: str
+    password: str = field(repr=False)
+
+u = User("admin", "1234")
+
+print(u)
+# Output: User(username='admin')
+
+# compare=False
+# - Ignore field during equality checks.
+@dataclass
+class Product:
+    name: str
+    id: int = field(compare=False)
+
+p1 = Product("Laptop", 1)
+p2 = Product("Laptop", 2)
+
+print(p1 == p2)
+# Output: True
+
+# 5. Dataclass Inheritance
+# - Dataclasses support inheritance.
+from dataclasses import dataclass
+
+@dataclass
+class Person:
+    name: str
+    age: int
+
+@dataclass
+class Employee(Person):
+    salary: int
+
+e = Employee("Aman", 22, 50000)
+
+print(e)
+# Output:
+Employee(name='Aman', age=22, salary=50000)
+
+# Method Override
+@dataclass
+class Animal:
+    name: str
+
+    def sound(self):
+        print("Generic Sound")
+
+
+@dataclass
+class Dog(Animal):
+
+    def sound(self):
+        print("Bark")
+# Usage:
+d = Dog("Tommy")
+d.sound()
+# Output: Bark
+
+# 6. slots
+# - slots=True reduces memory usage and prevents creation of new attributes.
+from dataclasses import dataclass
+
+@dataclass(slots=True)
+class Student:
+    name: str
+    age: int
+# Usage:
+s = Student("Aman", 22)
+
+print(s.name)
+# Trying to add a new attribute:
+s.city = "Nagpur"
+# Output: AttributeError
+
+# Why Use slots?
+# Less memory consumption
+# Faster attribute access
+# Prevents accidental attributes
+@dataclass(slots=True)
+class Employee:
+    name: str
+    salary: int
+
+# Interview Questions
+# 1. What is a dataclass?
+# - A special class decorator that automatically generates methods like __init__(), __repr__(), and __eq__().
+
+# 2. Why use dataclasses?
+# - To reduce boilerplate code for data-holding classes.
+
+# 3. What is frozen=True?
+# - Makes objects immutable.
+@dataclass(frozen=True)
+class User:
+    name: str
+
+# 4. Why use field(default_factory=list)?
+# - To avoid sharing the same mutable object among instances.
+subjects = field(default_factory=list)
+
+# 5. What does slots=True do?
+# Saves memory
+# Improves performance
+# Prevents dynamic attribute creation
+
+# Quick Revision
+# @dataclass
+# ✅ Auto-generates methods
+salary: int = 1000
+# ✅ Default value
+# @dataclass(frozen=True)
+# ✅ Immutable object
+field(default_factory=list)
+# ✅ Safe mutable defaults
+field(repr=False)
+# ✅ Hide in print output
+field(compare=False)
+# ✅ Ignore during comparison
+# @dataclass(slots=True)
+# ✅ Memory optimization
+# class Child(Parent):
+# ✅ Dataclass inheritance
